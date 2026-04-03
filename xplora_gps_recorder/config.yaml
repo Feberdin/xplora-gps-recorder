@@ -29,25 +29,17 @@ options:
   log_level: "INFO"
   log_json: true
   poll_interval_seconds: 60
-  postgres_url:
-  postgres_host:
   postgres_port: 5432
   postgres_db: "xplora_gps"
-  postgres_user:
-  postgres_password:
   xplora_base_url:
   xplora_login_path: "/auth/login"
   xplora_devices_path: "/v1/devices"
-  xplora_location_path: ""
   xplora_username:
   xplora_password:
   xplora_verify_ssl: true
   reverse_geocode_enabled: true
   mqtt_enabled: false
-  mqtt_host: ""
   mqtt_port: 1883
-  mqtt_user: ""
-  mqtt_password: ""
   mqtt_topic_prefix: "kids/watch"
 schema:
   log_level: str
@@ -73,4 +65,3 @@ schema:
   mqtt_user: "str?"
   mqtt_password: "str?"
   mqtt_topic_prefix: str
-
