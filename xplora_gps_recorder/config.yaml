@@ -1,0 +1,76 @@
+# Purpose: Home Assistant add-on metadata and option schema for xplora-gps-recorder.
+# Inputs: Values entered in the Home Assistant Supervisor UI and stored in `/data/options.json`.
+# Outputs: Declarative add-on settings, UI fields, startup behavior, and exposed ports.
+# Invariants: Required Xplora and PostgreSQL values must be present before the add-on can start.
+# Debugging: If the add-on refuses to start, check the Supervisor logs and validate each required option.
+
+name: "Xplora GPS Recorder"
+version: "1.1.0"
+slug: "xplora_gps_recorder"
+description: >-
+  Poll Xplora smartwatches, store GPS history in PostgreSQL, and expose REST and MQTT data for Home Assistant.
+url: "https://github.com/Feberdin/xplora-gps-recorder"
+startup: application
+boot: auto
+init: false
+ingress: true
+ingress_port: 8000
+panel_icon: mdi:map-marker-path
+panel_title: Xplora GPS Recorder
+arch:
+  - aarch64
+  - amd64
+  - armv7
+ports:
+  8000/tcp: 8000
+ports_description:
+  8000/tcp: REST API
+options:
+  log_level: "INFO"
+  log_json: true
+  poll_interval_seconds: 60
+  postgres_url:
+  postgres_host:
+  postgres_port: 5432
+  postgres_db: "xplora_gps"
+  postgres_user:
+  postgres_password:
+  xplora_base_url:
+  xplora_login_path: "/auth/login"
+  xplora_devices_path: "/v1/devices"
+  xplora_location_path: ""
+  xplora_username:
+  xplora_password:
+  xplora_verify_ssl: true
+  reverse_geocode_enabled: true
+  mqtt_enabled: false
+  mqtt_host: ""
+  mqtt_port: 1883
+  mqtt_user: ""
+  mqtt_password: ""
+  mqtt_topic_prefix: "kids/watch"
+schema:
+  log_level: str
+  log_json: bool
+  poll_interval_seconds: int
+  postgres_url: "str?"
+  postgres_host: "str?"
+  postgres_port: int
+  postgres_db: str
+  postgres_user: "str?"
+  postgres_password: "str?"
+  xplora_base_url: str
+  xplora_login_path: str
+  xplora_devices_path: str
+  xplora_location_path: "str?"
+  xplora_username: str
+  xplora_password: str
+  xplora_verify_ssl: bool
+  reverse_geocode_enabled: bool
+  mqtt_enabled: bool
+  mqtt_host: "str?"
+  mqtt_port: int
+  mqtt_user: "str?"
+  mqtt_password: "str?"
+  mqtt_topic_prefix: str
+

@@ -1,0 +1,48 @@
+# Purpose: Local and server deployment definition for the full recorder stack.
+# Inputs: Runtime values from `.env` and persisted database volume contents.
+# Outputs: `app`, `postgres`, and optional `redis` services with sane defaults.
+# Invariants: API listens on port 8000, PostgreSQL data persists in `postgres_data`.
+# Debugging: Use `docker compose logs -f app postgres` to trace startup and connectivity issues.
+
+services:
+  app:
+    build:
+      context: .
+    container_name: xplora-gps-recorder-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: xplora-gps-recorder-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-xplora_gps}
+      POSTGRES_USER: ${POSTGRES_USER:-xplora}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-xplora} -d ${POSTGRES_DB:-xplora_gps}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: xplora-gps-recorder-redis
+    restart: unless-stopped
+    profiles: ["cache"]
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:

@@ -1,0 +1,71 @@
+configuration:
+  log_level:
+    name: Log-Level
+    description: Steuert, wie viele Details das Add-on in die Logs schreibt.
+  log_json:
+    name: JSON-Logs
+    description: Aktiviert strukturierte JSON-Logs für bessere Auswertung.
+  poll_interval_seconds:
+    name: Polling-Intervall
+    description: Anzahl Sekunden zwischen zwei Xplora-Abfragen.
+  postgres_url:
+    name: PostgreSQL-URL
+    description: Optionale vollständige SQLAlchemy-URL. Wenn gesetzt, werden Host/User/Passwort ignoriert.
+  postgres_host:
+    name: PostgreSQL-Host
+    description: Datenbank-Host, wenn keine vollständige URL verwendet wird.
+  postgres_port:
+    name: PostgreSQL-Port
+    description: TCP-Port der Datenbank.
+  postgres_db:
+    name: PostgreSQL-Datenbank
+    description: Name der Datenbank für xplora-gps-recorder.
+  postgres_user:
+    name: PostgreSQL-Benutzer
+    description: Benutzername der Datenbank.
+  postgres_password:
+    name: PostgreSQL-Passwort
+    description: Passwort der Datenbank.
+  xplora_base_url:
+    name: Xplora-Basis-URL
+    description: Basis-URL der Xplora-Cloud-API.
+  xplora_login_path:
+    name: Xplora-Login-Pfad
+    description: API-Pfad für die Anmeldung.
+  xplora_devices_path:
+    name: Xplora-Gerätepfad
+    description: API-Pfad für die Geräteliste.
+  xplora_location_path:
+    name: Xplora-Standortpfad
+    description: Optionaler Zusatz-Endpunkt für Positionsdaten. Unterstützt {device_id}.
+  xplora_username:
+    name: Xplora-Benutzername
+    description: Benutzername oder E-Mail des Xplora-Kontos.
+  xplora_password:
+    name: Xplora-Passwort
+    description: Passwort des Xplora-Kontos.
+  xplora_verify_ssl:
+    name: TLS-Zertifikate prüfen
+    description: Nur in kontrollierten Testumgebungen mit eigenen Zertifikaten deaktivieren.
+  reverse_geocode_enabled:
+    name: Reverse Geocoding
+    description: Wandelt Koordinaten über Nominatim in lesbare Orte um.
+  mqtt_enabled:
+    name: MQTT aktivieren
+    description: Veröffentlicht Positions- und Bewegungsdaten an einen MQTT-Broker.
+  mqtt_host:
+    name: MQTT-Host
+    description: Hostname des MQTT-Brokers.
+  mqtt_port:
+    name: MQTT-Port
+    description: TCP-Port des MQTT-Brokers.
+  mqtt_user:
+    name: MQTT-Benutzer
+    description: Benutzername des MQTT-Brokers.
+  mqtt_password:
+    name: MQTT-Passwort
+    description: Passwort des MQTT-Brokers.
+  mqtt_topic_prefix:
+    name: MQTT-Topic-Präfix
+    description: Präfix für alle veröffentlichten MQTT-Topics.
+
