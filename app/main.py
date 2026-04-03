@@ -62,7 +62,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="xplora-gps-recorder",
-    version="1.2.0",
+    version="1.2.1",
     summary="Periodic GPS recorder for Xplora smartwatches",
     lifespan=lifespan,
 )

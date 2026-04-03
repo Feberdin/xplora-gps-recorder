@@ -9,6 +9,7 @@ Debugging: Run this script manually if the container exits early to isolate DB c
 from __future__ import annotations
 
 import logging
+import sys
 import time
 from pathlib import Path
 
@@ -18,8 +19,17 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.config import get_settings
-from app.logging_config import configure_logging
+# Why this section exists:
+# Home Assistant starts the database bootstrap via `python scripts/init_db.py`.
+# In that execution mode, Python places `/app/scripts` on `sys.path`, but not the
+# project root `/app`, so `from app...` imports would fail. We add the repository
+# root explicitly to keep direct script execution reliable in Docker and HA.
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from app.config import get_settings  # noqa: E402
+from app.logging_config import configure_logging  # noqa: E402
 
 LOGGER = logging.getLogger(__name__)
 
@@ -73,8 +83,7 @@ def ensure_sqlite_parent_directory(database_url: str) -> None:
 
 
 def run_migrations() -> None:
-    project_root = Path(__file__).resolve().parents[1]
-    alembic_config = Config(str(project_root / "alembic.ini"))
+    alembic_config = Config(str(PROJECT_ROOT / "alembic.ini"))
     command.upgrade(alembic_config, "head")
 
 

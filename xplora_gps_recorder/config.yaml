@@ -5,7 +5,7 @@
 # Debugging: If the add-on refuses to start, check the Supervisor logs and validate each required option.
 
 name: "Xplora GPS Recorder"
-version: "1.2.0"
+version: "1.2.1"
 slug: "xplora_gps_recorder"
 description: >-
   Poll Xplora smartwatches, store GPS history in SQLite or PostgreSQL, and expose REST and MQTT data for Home Assistant.

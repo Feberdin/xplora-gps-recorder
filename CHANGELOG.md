@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1 - 2026-04-03
+
+- Fixed Home Assistant add-on startup when bootstrapping the database with `python scripts/init_db.py`
+- Added a defensive import-path fallback so the `app` package is found reliably inside the container
+- Exported `PYTHONPATH=/app` during startup to keep direct script execution and Uvicorn imports consistent
+
 ## 1.2.0 - 2026-04-03
 
 - Added SQLite as the default embedded database for the Home Assistant add-on
