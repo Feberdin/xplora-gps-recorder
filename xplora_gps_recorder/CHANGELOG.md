@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 - 2026-04-03
+
+- Added SQLite as the default embedded database for the Home Assistant add-on
+- Kept PostgreSQL as an optional advanced database mode
+- Simplified the add-on configuration so no external database is required for first-time installs
+
 ## 1.1.0 - 2026-04-03
 
 - Packaged the backend as a Home Assistant local add-on

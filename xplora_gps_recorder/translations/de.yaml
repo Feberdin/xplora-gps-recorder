@@ -8,24 +8,27 @@ configuration:
   poll_interval_seconds:
     name: Polling-Intervall
     description: Anzahl Sekunden zwischen zwei Xplora-Abfragen.
-  postgres_url:
-    name: PostgreSQL-URL
-    description: Optionale vollständige SQLAlchemy-URL. Wenn gesetzt, werden Host/User/Passwort ignoriert.
+  sqlite_path:
+    name: SQLite-Pfad
+    description: Lokaler Dateipfad für die eingebaute Datenbank. Für normale Installationen einfach unverändert lassen.
+  database_url:
+    name: Datenbank-URL
+    description: Optionale vollständige SQLAlchemy-URL. Wenn gesetzt, werden SQLite- und PostgreSQL-Einzelfelder ignoriert.
   postgres_host:
     name: PostgreSQL-Host
-    description: Datenbank-Host, wenn keine vollständige URL verwendet wird.
+    description: Optionaler Datenbank-Host, wenn statt SQLite PostgreSQL verwendet werden soll.
   postgres_port:
     name: PostgreSQL-Port
-    description: TCP-Port der Datenbank.
+    description: Optionaler TCP-Port der PostgreSQL-Datenbank.
   postgres_db:
     name: PostgreSQL-Datenbank
-    description: Name der Datenbank für xplora-gps-recorder.
+    description: Optionaler Name der PostgreSQL-Datenbank für xplora-gps-recorder.
   postgres_user:
     name: PostgreSQL-Benutzer
-    description: Benutzername der Datenbank.
+    description: Optionaler Benutzername der PostgreSQL-Datenbank.
   postgres_password:
     name: PostgreSQL-Passwort
-    description: Passwort der Datenbank.
+    description: Optionales Passwort der PostgreSQL-Datenbank.
   xplora_base_url:
     name: Xplora-Basis-URL
     description: Basis-URL der Xplora-Cloud-API.
@@ -68,4 +71,3 @@ configuration:
   mqtt_topic_prefix:
     name: MQTT-Topic-Präfix
     description: Präfix für alle veröffentlichten MQTT-Topics.
-

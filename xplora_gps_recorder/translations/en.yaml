@@ -8,24 +8,27 @@ configuration:
   poll_interval_seconds:
     name: Poll interval
     description: Number of seconds between Xplora API polling cycles.
-  postgres_url:
-    name: PostgreSQL URL
-    description: Optional full SQLAlchemy connection URL. If set, host/user/password fields are ignored.
+  sqlite_path:
+    name: SQLite path
+    description: Local file path for the built-in database. Leave the default value for normal installs.
+  database_url:
+    name: Database URL
+    description: Optional full SQLAlchemy URL. If set, SQLite and PostgreSQL individual fields are ignored.
   postgres_host:
     name: PostgreSQL host
-    description: Database host name when you do not provide a full PostgreSQL URL.
+    description: Optional database host name when you want PostgreSQL instead of SQLite.
   postgres_port:
     name: PostgreSQL port
-    description: Database TCP port.
+    description: Optional PostgreSQL TCP port.
   postgres_db:
     name: PostgreSQL database
-    description: Database name used by xplora-gps-recorder.
+    description: Optional PostgreSQL database name used by xplora-gps-recorder.
   postgres_user:
     name: PostgreSQL user
-    description: Database user name.
+    description: Optional PostgreSQL user name.
   postgres_password:
     name: PostgreSQL password
-    description: Database password.
+    description: Optional PostgreSQL password.
   xplora_base_url:
     name: Xplora base URL
     description: Base URL for the Xplora cloud API.
@@ -68,4 +71,3 @@ configuration:
   mqtt_topic_prefix:
     name: MQTT topic prefix
     description: Prefix used for all published MQTT topics.
-

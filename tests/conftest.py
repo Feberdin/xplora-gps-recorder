@@ -15,7 +15,7 @@ from app.config import Settings
 # Why this section exists:
 # SQLAlchemy session setup loads settings at import time, so tests need safe defaults
 # before any application module imports happen.
-os.environ.setdefault("POSTGRES_URL", "postgresql+psycopg://test:test@localhost:5432/test_db")
+os.environ.setdefault("DATABASE_URL", "sqlite:///./tests/test_bootstrap.sqlite3")
 os.environ.setdefault("XPLORA_BASE_URL", "https://api.example.test")
 os.environ.setdefault("XPLORA_USERNAME", "child@example.test")
 os.environ.setdefault("XPLORA_PASSWORD", "secret")
@@ -25,7 +25,7 @@ def make_settings(**overrides) -> Settings:
     """Build a minimal valid settings object for unit tests."""
 
     values = {
-        "POSTGRES_URL": "postgresql+psycopg://test:test@localhost:5432/test_db",
+        "DATABASE_URL": "sqlite:///./tests/test_settings.sqlite3",
         "XPLORA_BASE_URL": "https://api.example.test",
         "XPLORA_USERNAME": "child@example.test",
         "XPLORA_PASSWORD": "secret",

@@ -1,6 +1,6 @@
 # xplora-gps-recorder
 
-`xplora-gps-recorder` is a Dockerized backend service that polls GPS locations from Xplora smartwatches every 60 seconds, stores the samples in PostgreSQL, enriches them with reverse geocoding, derives movement events and heatmap tiles, and exposes the data through a REST API and optional MQTT topics for Home Assistant.
+`xplora-gps-recorder` is a Dockerized backend service that polls GPS locations from Xplora smartwatches every 60 seconds, stores the samples in SQLite or PostgreSQL, enriches them with reverse geocoding, derives movement events and heatmap tiles, and exposes the data through a REST API and optional MQTT topics for Home Assistant.
 
 The project is structured so operators without deep Python experience can deploy it, inspect logs, and debug typical failures quickly.
 
@@ -8,7 +8,7 @@ The project is structured so operators without deep Python experience can deploy
 
 For Home Assistant, this project is packaged as a **local add-on**, not as a native custom integration.
 
-That is the better fit because the system is a standalone service with its own scheduler, PostgreSQL persistence, reverse-geocoding cache, and API surface. Home Assistant's developer docs describe add-ons/apps as separate applications around Home Assistant, while integrations are better suited to code that runs directly inside Home Assistant Core.
+That is the better fit because the system is a standalone service with its own scheduler, persistent storage, reverse-geocoding cache, and API surface. Home Assistant's developer docs describe add-ons/apps as separate applications around Home Assistant, while integrations are better suited to code that runs directly inside Home Assistant Core.
 
 Standalone Docker Compose deployment remains fully supported outside Home Assistant.
 
@@ -17,8 +17,8 @@ Standalone Docker Compose deployment remains fully supported outside Home Assist
 ### Features
 
 - Polls multiple Xplora watches every 60 seconds with retry-aware HTTP calls.
-- Stores every GPS sample in PostgreSQL for long-term history and analysis.
-- Uses OpenStreetMap Nominatim reverse geocoding with PostgreSQL caching and optional Redis caching.
+- Stores every GPS sample in SQLite or PostgreSQL for long-term history and analysis.
+- Uses OpenStreetMap Nominatim reverse geocoding with SQL caching and optional Redis caching.
 - Detects movement vs stationary segments with the Haversine formula.
 - Builds heatmap tiles by rounded latitude/longitude buckets.
 - Exposes REST endpoints for devices, positions, movements, and heatmap tiles.
@@ -37,10 +37,10 @@ Standalone Docker Compose deployment remains fully supported outside Home Assist
 flowchart LR
     X["Xplora Cloud API"] --> P["Polling Scheduler (60s)"]
     P --> I["Ingestion Service"]
-    I --> DB["PostgreSQL"]
+    I --> DB["SQLite / PostgreSQL"]
     I --> G["Reverse Geocoder"]
     G --> N["Nominatim API"]
-    G --> C["PostgreSQL / Redis Cache"]
+    G --> C["SQL Cache / Redis Cache"]
     I --> M["Movement Detection"]
     I --> H["Heatmap Updater"]
     I --> Q["MQTT Publisher (optional)"]
@@ -127,7 +127,7 @@ xplora-gps-recorder/
    cp .env.example .env
    ```
 
-2. Edit `.env` with your Xplora, PostgreSQL, and optional MQTT values.
+2. Edit `.env` with your Xplora values plus either SQLite or PostgreSQL database settings.
 
 3. Build and start the stack.
 
@@ -143,7 +143,7 @@ xplora-gps-recorder/
 2. Open the three-dot menu and choose `Repositories`.
 3. Add `https://github.com/Feberdin/xplora-gps-recorder`.
 4. Install **Xplora GPS Recorder**.
-5. Fill the add-on options, especially Xplora credentials and PostgreSQL settings.
+5. Fill the add-on options. For most installs, keep the default SQLite path and only enter the Xplora credentials.
 6. Start the add-on and open it via ingress or port `8000`.
 
 ### Local development
@@ -170,7 +170,8 @@ All secrets live in `.env`. Never commit production credentials.
 
 | Variable | Purpose |
 | --- | --- |
-| `POSTGRES_URL` | SQLAlchemy connection string used by API, scheduler, and migrations |
+| `DATABASE_URL` | Optional full SQLAlchemy connection string for PostgreSQL or another supported database |
+| `SQLITE_PATH` | Default local database file path used when `DATABASE_URL` is empty |
 | `POLL_INTERVAL_SECONDS` | Scheduler interval, default `60` |
 | `LOG_LEVEL` | `DEBUG`, `INFO`, `WARNING`, or `ERROR` |
 | `LOG_JSON` | JSON logs for container environments |
@@ -328,9 +329,10 @@ curl http://localhost:8000/health
 - Subscribe directly with `mosquitto_sub -h <host> -t 'kids/watch/#' -v`.
 - Check broker authentication and TLS settings.
 
-### PostgreSQL connection errors
+### Database connection errors
 
-- Confirm `POSTGRES_URL` matches the database container credentials.
+- If you use SQLite, confirm the configured path is writable.
+- If you use PostgreSQL, confirm `DATABASE_URL` matches the database container credentials.
 - Run `docker compose ps` and ensure the `postgres` service is healthy.
 - Re-run `python scripts/init_db.py` to isolate migration issues.
 
@@ -338,7 +340,7 @@ curl http://localhost:8000/health
 
 - Keep `.env` out of Git and rotate Xplora or MQTT credentials if they were exposed.
 - Run the container behind a reverse proxy or private network if the API should not be public.
-- Restrict PostgreSQL and MQTT access to trusted hosts.
+- Restrict PostgreSQL and MQTT access to trusted hosts when you enable them.
 
 ## License
 

@@ -1,6 +1,6 @@
 # Xplora GPS Recorder Add-on
 
-This Home Assistant add-on polls Xplora smartwatches, stores GPS history in PostgreSQL, enriches locations, detects movement, and exposes REST and MQTT data.
+This Home Assistant add-on polls Xplora smartwatches, stores GPS history in SQLite by default or PostgreSQL optionally, enriches locations, detects movement, and exposes REST and MQTT data.
 
 ## Install
 
@@ -12,10 +12,19 @@ This Home Assistant add-on polls Xplora smartwatches, stores GPS history in Post
 
 ## Required configuration
 
+- `sqlite_path` can stay at the default value
 - `xplora_base_url`
 - `xplora_username`
 - `xplora_password`
-- either `postgres_url` or `postgres_host` + `postgres_db` + `postgres_user` + `postgres_password`
+
+## Optional advanced database configuration
+
+- `database_url`
+- `postgres_host`
+- `postgres_port`
+- `postgres_db`
+- `postgres_user`
+- `postgres_password`
 
 ## Exposed API
 
@@ -24,4 +33,3 @@ This Home Assistant add-on polls Xplora smartwatches, stores GPS history in Post
 - `/devices/{device_id}/positions`
 - `/devices/{device_id}/movements`
 - `/devices/{device_id}/heatmap`
-

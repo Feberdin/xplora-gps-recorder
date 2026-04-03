@@ -7,7 +7,7 @@
 That is the better fit because this project is a long-running backend service with:
 
 - its own polling scheduler
-- PostgreSQL persistence
+- persistent storage
 - reverse-geocoding cache
 - analytics endpoints
 - optional MQTT publishing
@@ -43,31 +43,44 @@ This repository is set up to work as a **custom add-on repository**.
 3. Restart Home Assistant or reload the add-on store.
 4. Install **Xplora GPS Recorder** from the local add-on store.
 
-## PostgreSQL requirement
+## Database requirement
 
-The add-on still uses PostgreSQL, because long-term history and analytics are central features.
+The add-on now uses **SQLite by default**, stored locally inside Home Assistant under:
 
-You have two supported options:
+```text
+/data/xplora_gps_recorder.db
+```
 
-- use an external PostgreSQL server
-- use a separate PostgreSQL add-on/container and enter its connection details manually
+That means you do **not** need an external database for the normal installation path.
+
+You still have two supported options:
+
+- keep the default embedded SQLite database
+- optionally switch to PostgreSQL later for a more advanced setup
 
 You can either:
 
-- provide `postgres_url` directly
+- keep `sqlite_path` as-is
+- provide `database_url` directly
 - or fill `postgres_host`, `postgres_port`, `postgres_db`, `postgres_user`, and `postgres_password`
 
 ## Add-on configuration
 
 ### Required
 
+- `sqlite_path` can stay at the default value
 - `xplora_base_url`
 - `xplora_username`
 - `xplora_password`
-- either `postgres_url` or full PostgreSQL host credentials
 
 ### Optional
 
+- `database_url`
+- `postgres_host`
+- `postgres_port`
+- `postgres_db`
+- `postgres_user`
+- `postgres_password`
 - `xplora_location_path`
 - `mqtt_enabled`
 - `mqtt_host`
@@ -95,7 +108,7 @@ Useful endpoints:
 ### The add-on does not start
 
 - Check the add-on logs in Supervisor.
-- Confirm that PostgreSQL values are complete.
+- Confirm that `sqlite_path` is writable or the PostgreSQL values are complete.
 - Confirm that `xplora_base_url`, `xplora_username`, and `xplora_password` are filled.
 
 ### GPS data is missing

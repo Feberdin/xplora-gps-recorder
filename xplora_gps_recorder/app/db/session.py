@@ -22,11 +22,14 @@ class Base(DeclarativeBase):
 
 
 settings = get_settings()
+database_url = settings.database_url or ""
+connect_args = {"check_same_thread": False} if database_url.startswith("sqlite") else {}
 
 engine = create_engine(
-    settings.postgres_url,
+    database_url,
     future=True,
-    pool_pre_ping=True,
+    pool_pre_ping=not database_url.startswith("sqlite"),
+    connect_args=connect_args,
 )
 
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)

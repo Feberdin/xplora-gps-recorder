@@ -1,14 +1,14 @@
 # Purpose: Home Assistant add-on metadata and option schema for xplora-gps-recorder.
 # Inputs: Values entered in the Home Assistant Supervisor UI and stored in `/data/options.json`.
 # Outputs: Declarative add-on settings, UI fields, startup behavior, and exposed ports.
-# Invariants: Required Xplora and PostgreSQL values must be present before the add-on can start.
+# Invariants: Required Xplora values must be present before the add-on can start.
 # Debugging: If the add-on refuses to start, check the Supervisor logs and validate each required option.
 
 name: "Xplora GPS Recorder"
-version: "1.1.0"
+version: "1.2.0"
 slug: "xplora_gps_recorder"
 description: >-
-  Poll Xplora smartwatches, store GPS history in PostgreSQL, and expose REST and MQTT data for Home Assistant.
+  Poll Xplora smartwatches, store GPS history in SQLite or PostgreSQL, and expose REST and MQTT data for Home Assistant.
 url: "https://github.com/Feberdin/xplora-gps-recorder"
 startup: application
 boot: auto
@@ -29,8 +29,7 @@ options:
   log_level: "INFO"
   log_json: true
   poll_interval_seconds: 60
-  postgres_port: 5432
-  postgres_db: "xplora_gps"
+  sqlite_path: "/data/xplora_gps_recorder.db"
   xplora_base_url:
   xplora_login_path: "/auth/login"
   xplora_devices_path: "/v1/devices"
@@ -45,10 +44,11 @@ schema:
   log_level: str
   log_json: bool
   poll_interval_seconds: int
-  postgres_url: "str?"
+  sqlite_path: str
+  database_url: "str?"
   postgres_host: "str?"
-  postgres_port: int
-  postgres_db: str
+  postgres_port: "int?"
+  postgres_db: "str?"
   postgres_user: "str?"
   postgres_password: "str?"
   xplora_base_url: str

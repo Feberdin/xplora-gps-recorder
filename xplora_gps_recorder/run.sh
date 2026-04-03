@@ -2,7 +2,7 @@
 # Purpose: Start the recorder in Docker or Home Assistant add-on mode with one shared entrypoint.
 # Inputs: Environment variables and, in add-on mode, `/data/options.json` written by Supervisor.
 # Outputs: Validated environment variables, database initialization, and the running FastAPI service.
-# Invariants: Required Xplora and PostgreSQL settings must exist before the application boots.
+# Invariants: Required Xplora settings must exist before the application boots; the database defaults to SQLite.
 # Debugging: Set `XPLORA_DRY_RUN=1` to print the resolved config without starting the app process.
 
 set -eu
@@ -49,6 +49,7 @@ mapping = {
     "log_level": "LOG_LEVEL",
     "log_json": "LOG_JSON",
     "poll_interval_seconds": "POLL_INTERVAL_SECONDS",
+    "sqlite_path": "SQLITE_PATH",
     "xplora_base_url": "XPLORA_BASE_URL",
     "xplora_login_path": "XPLORA_LOGIN_PATH",
     "xplora_devices_path": "XPLORA_DEVICES_PATH",
@@ -68,9 +69,9 @@ mapping = {
 for source_key, target_key in mapping.items():
     emit(target_key, options.get(source_key))
 
-postgres_url = options.get("postgres_url")
-if postgres_url:
-    emit("POSTGRES_URL", postgres_url)
+database_url = options.get("database_url") or options.get("postgres_url")
+if database_url:
+    emit("DATABASE_URL", database_url)
 else:
     host = options.get("postgres_host")
     port = options.get("postgres_port", 5432)
@@ -82,7 +83,11 @@ else:
             f"postgresql+psycopg://{quote(str(user), safe='')}:"
             f"{quote(str(password), safe='')}@{host}:{port}/{database}"
         )
-        emit("POSTGRES_URL", database_url)
+        emit("DATABASE_URL", database_url)
+    else:
+        sqlite_path = options.get("sqlite_path", "/data/xplora_gps_recorder.db")
+        if sqlite_path:
+            emit("DATABASE_URL", f"sqlite:///{sqlite_path}")
 PY
 
   # Why this section exists:
@@ -102,8 +107,8 @@ require_env() {
 }
 
 validate_environment() {
-  require_env "POSTGRES_URL" \
-    "Provide a full PostgreSQL URL or fill postgres_host/postgres_db/postgres_user/postgres_password."
+  require_env "DATABASE_URL" \
+    "Leave the default SQLite path in place or provide a PostgreSQL host/credentials or full database URL."
   require_env "XPLORA_BASE_URL" "Set the Xplora cloud base URL."
   require_env "XPLORA_USERNAME" "Set the Xplora account username."
   require_env "XPLORA_PASSWORD" "Set the Xplora account password."
@@ -122,7 +127,8 @@ Resolved startup configuration:
   POLL_INTERVAL_SECONDS=${POLL_INTERVAL_SECONDS:-60}
   LOG_LEVEL=${LOG_LEVEL:-INFO}
   LOG_JSON=${LOG_JSON:-true}
-  POSTGRES_URL=$( [ -n "${POSTGRES_URL:-}" ] && printf '<set>' || printf '<missing>' )
+  DATABASE_URL=$( [ -n "${DATABASE_URL:-}" ] && printf '%s' "$DATABASE_URL" || printf '<missing>' )
+  SQLITE_PATH=$( [ -n "${SQLITE_PATH:-}" ] && printf '%s' "$SQLITE_PATH" || printf '<unset>' )
   XPLORA_BASE_URL=$( [ -n "${XPLORA_BASE_URL:-}" ] && printf '%s' "$XPLORA_BASE_URL" || printf '<missing>' )
   XPLORA_USERNAME=$( [ -n "${XPLORA_USERNAME:-}" ] && printf '<set>' || printf '<missing>' )
   XPLORA_PASSWORD=$( [ -n "${XPLORA_PASSWORD:-}" ] && printf '<set>' || printf '<missing>' )
@@ -147,4 +153,3 @@ main() {
 }
 
 main "$@"
-

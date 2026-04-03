@@ -1,5 +1,5 @@
 """
-Purpose: Alembic environment for applying database migrations against PostgreSQL.
+Purpose: Alembic environment for applying database migrations against SQLite or PostgreSQL.
 Inputs: SQLAlchemy metadata from the ORM models and runtime database settings.
 Outputs: Online or offline migration execution.
 Invariants: Migration target metadata must stay aligned with `app.db.models`.
@@ -18,7 +18,7 @@ from app.db.models import Base  # noqa: F401
 
 config = context.config
 settings = get_settings()
-config.set_main_option("sqlalchemy.url", settings.postgres_url)
+config.set_main_option("sqlalchemy.url", settings.database_url or "")
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
@@ -62,4 +62,3 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
-

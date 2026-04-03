@@ -10,8 +10,9 @@ carefully during local debugging to confirm configuration without leaking secret
 from __future__ import annotations
 
 from functools import lru_cache
+from pathlib import Path
 
-from pydantic import Field, SecretStr
+from pydantic import AliasChoices, Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -36,7 +37,11 @@ class Settings(BaseSettings):
     log_json: bool = Field(default=True, alias="LOG_JSON")
     log_include_sql: bool = Field(default=False, alias="LOG_INCLUDE_SQL")
 
-    postgres_url: str = Field(alias="POSTGRES_URL")
+    database_url: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("DATABASE_URL", "POSTGRES_URL"),
+    )
+    sqlite_path: str = Field(default="/data/xplora_gps_recorder.db", alias="SQLITE_PATH")
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
 
     xplora_base_url: str = Field(alias="XPLORA_BASE_URL")
@@ -89,6 +94,21 @@ class Settings(BaseSettings):
     mqtt_password: SecretStr | None = Field(default=None, alias="MQTT_PASSWORD")
     mqtt_topic_prefix: str = Field(default="kids/watch", alias="MQTT_TOPIC_PREFIX")
     mqtt_tls_enabled: bool = Field(default=False, alias="MQTT_TLS_ENABLED")
+
+    @model_validator(mode="after")
+    def resolve_database_url(self) -> "Settings":
+        """Allow SQLite as the zero-setup default while keeping external databases optional."""
+
+        if self.database_url:
+            return self
+
+        sqlite_path = self.sqlite_path.strip()
+        if not sqlite_path:
+            raise ValueError("Either DATABASE_URL/POSTGRES_URL or SQLITE_PATH must be configured.")
+
+        normalized_path = Path(sqlite_path)
+        self.database_url = f"sqlite:///{normalized_path}"
+        return self
 
 
 @lru_cache(maxsize=1)
