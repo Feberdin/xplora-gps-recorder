@@ -9,6 +9,7 @@ carefully during local debugging to confirm configuration without leaking secret
 
 from __future__ import annotations
 
+import os
 from functools import lru_cache
 from pathlib import Path
 
@@ -44,7 +45,11 @@ class Settings(BaseSettings):
     sqlite_path: str = Field(default="/data/xplora_gps_recorder.db", alias="SQLITE_PATH")
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
 
-    xplora_base_url: str = Field(alias="XPLORA_BASE_URL")
+    xplora_base_url: str = Field(default="https://api.myxplora.com/api", alias="XPLORA_BASE_URL")
+    xplora_country_code: str | None = Field(default=None, alias="XPLORA_COUNTRY_CODE")
+    xplora_user_lang: str | None = Field(default=None, alias="XPLORA_USER_LANG")
+    xplora_time_zone: str | None = Field(default=None, alias="XPLORA_TIME_ZONE")
+    xplora_trigger_locate: bool = Field(default=True, alias="XPLORA_TRIGGER_LOCATE")
     xplora_login_path: str = Field(default="/auth/login", alias="XPLORA_LOGIN_PATH")
     xplora_devices_path: str = Field(default="/v1/devices", alias="XPLORA_DEVICES_PATH")
     xplora_location_path: str | None = Field(default=None, alias="XPLORA_LOCATION_PATH")
@@ -108,6 +113,27 @@ class Settings(BaseSettings):
 
         normalized_path = Path(sqlite_path)
         self.database_url = f"sqlite:///{normalized_path}"
+        return self
+
+    @model_validator(mode="after")
+    def resolve_xplora_defaults(self) -> "Settings":
+        """Fill in safe defaults for the GraphQL client and validate login requirements."""
+
+        self.xplora_base_url = self.xplora_base_url.strip() or "https://api.myxplora.com/api"
+
+        if not self.xplora_user_lang:
+            lang = os.getenv("LANG", "").lower()
+            self.xplora_user_lang = "de-DE" if lang.startswith("de") else "en-GB"
+
+        if not self.xplora_time_zone:
+            self.xplora_time_zone = os.getenv("TZ", "UTC") or "UTC"
+
+        username = self.xplora_username.strip()
+        if "@" not in username and not (self.xplora_country_code and self.xplora_country_code.strip()):
+            raise ValueError(
+                "XPLORA_COUNTRY_CODE is required when XPLORA_USERNAME is a phone number instead of an e-mail address."
+            )
+
         return self
 
 

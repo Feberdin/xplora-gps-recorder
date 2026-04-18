@@ -180,12 +180,16 @@ All secrets live in `.env`. Never commit production credentials.
 
 | Variable | Purpose |
 | --- | --- |
-| `XPLORA_BASE_URL` | Base URL for the Xplora cloud |
-| `XPLORA_LOGIN_PATH` | Login endpoint path |
-| `XPLORA_DEVICES_PATH` | Endpoint that returns the device list |
-| `XPLORA_LOCATION_PATH` | Optional second endpoint for location payloads, can include `{device_id}` |
-| `XPLORA_USERNAME` | Xplora account username |
+| `XPLORA_BASE_URL` | Full Xplora GraphQL endpoint, default `https://api.myxplora.com/api` |
+| `XPLORA_COUNTRY_CODE` | Required only when `XPLORA_USERNAME` is a phone number instead of an e-mail address |
+| `XPLORA_USER_LANG` | Login language such as `de-DE` or `en-GB` |
+| `XPLORA_TIME_ZONE` | IANA time zone such as `Europe/Berlin` |
+| `XPLORA_TRIGGER_LOCATE` | Ask the watch for a fresh location before reading the latest point |
+| `XPLORA_USERNAME` | Xplora account username or e-mail address |
 | `XPLORA_PASSWORD` | Xplora account password |
+| `XPLORA_LOGIN_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |
+| `XPLORA_DEVICES_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |
+| `XPLORA_LOCATION_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |
 
 ### Reverse geocoding and cache
 
@@ -313,9 +317,10 @@ curl http://localhost:8000/health
 
 ### The app starts but no positions appear
 
-- Check `XPLORA_BASE_URL`, `XPLORA_LOGIN_PATH`, and `XPLORA_DEVICES_PATH`.
-- Set `LOG_LEVEL=DEBUG` and inspect the normalized payload handling in the app logs.
-- Confirm the Xplora API returns latitude and longitude fields.
+- Check `XPLORA_USERNAME` and `XPLORA_PASSWORD` first.
+- If you log in with a phone number, also set `XPLORA_COUNTRY_CODE`.
+- Keep `XPLORA_BASE_URL` on the default `https://api.myxplora.com/api` unless you have verified a different endpoint.
+- Set `LOG_LEVEL=DEBUG` and inspect the GraphQL login and per-watch polling log lines.
 
 ### Reverse geocoding is missing
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0 - 2026-04-18
+
+- Replaced the placeholder REST-based Xplora client with a GraphQL client tailored to the current Xplora cloud flow
+- Added support for phone logins via `xplora_country_code` while keeping e-mail login as the default path
+- Added fresh-location triggering before each poll and simplified the default endpoint to `https://api.myxplora.com/api`
+
 ## 1.2.1 - 2026-04-03
 
 - Fixed Home Assistant add-on startup when bootstrapping the database with `python scripts/init_db.py`

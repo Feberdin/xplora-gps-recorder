@@ -51,6 +51,10 @@ mapping = {
     "poll_interval_seconds": "POLL_INTERVAL_SECONDS",
     "sqlite_path": "SQLITE_PATH",
     "xplora_base_url": "XPLORA_BASE_URL",
+    "xplora_country_code": "XPLORA_COUNTRY_CODE",
+    "xplora_user_lang": "XPLORA_USER_LANG",
+    "xplora_time_zone": "XPLORA_TIME_ZONE",
+    "xplora_trigger_locate": "XPLORA_TRIGGER_LOCATE",
     "xplora_login_path": "XPLORA_LOGIN_PATH",
     "xplora_devices_path": "XPLORA_DEVICES_PATH",
     "xplora_location_path": "XPLORA_LOCATION_PATH",
@@ -109,7 +113,6 @@ require_env() {
 validate_environment() {
   require_env "DATABASE_URL" \
     "Leave the default SQLite path in place or provide a PostgreSQL host/credentials or full database URL."
-  require_env "XPLORA_BASE_URL" "Set the Xplora cloud base URL."
   require_env "XPLORA_USERNAME" "Set the Xplora account username."
   require_env "XPLORA_PASSWORD" "Set the Xplora account password."
 
@@ -130,6 +133,10 @@ Resolved startup configuration:
   DATABASE_URL=$( [ -n "${DATABASE_URL:-}" ] && printf '%s' "$DATABASE_URL" || printf '<missing>' )
   SQLITE_PATH=$( [ -n "${SQLITE_PATH:-}" ] && printf '%s' "$SQLITE_PATH" || printf '<unset>' )
   XPLORA_BASE_URL=$( [ -n "${XPLORA_BASE_URL:-}" ] && printf '%s' "$XPLORA_BASE_URL" || printf '<missing>' )
+  XPLORA_COUNTRY_CODE=$( [ -n "${XPLORA_COUNTRY_CODE:-}" ] && printf '%s' "$XPLORA_COUNTRY_CODE" || printf '<unset>' )
+  XPLORA_USER_LANG=$( [ -n "${XPLORA_USER_LANG:-}" ] && printf '%s' "$XPLORA_USER_LANG" || printf '<default>' )
+  XPLORA_TIME_ZONE=$( [ -n "${XPLORA_TIME_ZONE:-}" ] && printf '%s' "$XPLORA_TIME_ZONE" || printf '<default>' )
+  XPLORA_TRIGGER_LOCATE=${XPLORA_TRIGGER_LOCATE:-true}
   XPLORA_USERNAME=$( [ -n "${XPLORA_USERNAME:-}" ] && printf '<set>' || printf '<missing>' )
   XPLORA_PASSWORD=$( [ -n "${XPLORA_PASSWORD:-}" ] && printf '<set>' || printf '<missing>' )
   MQTT_ENABLED=${MQTT_ENABLED:-false}
@@ -142,6 +149,7 @@ main() {
   export API_HOST="${API_HOST:-0.0.0.0}"
   export API_PORT="${API_PORT:-8000}"
   export PYTHONPATH="${PYTHONPATH:-/app}"
+  export XPLORA_BASE_URL="${XPLORA_BASE_URL:-https://api.myxplora.com/api}"
   validate_environment
 
   if [ "${XPLORA_DRY_RUN:-0}" = "1" ]; then

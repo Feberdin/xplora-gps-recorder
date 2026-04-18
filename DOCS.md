@@ -68,7 +68,10 @@ You can either:
 - `postgres_db`
 - `postgres_user`
 - `postgres_password`
-- `xplora_location_path`
+- `xplora_country_code`
+- `xplora_user_lang`
+- `xplora_time_zone`
+- `xplora_trigger_locate`
 - `mqtt_enabled`
 - `mqtt_host`
 - `mqtt_user`
@@ -96,12 +99,14 @@ Useful endpoints:
 
 - Check the add-on logs in Supervisor.
 - Confirm that `sqlite_path` is writable or the PostgreSQL values are complete.
-- Confirm that `xplora_base_url`, `xplora_username`, and `xplora_password` are filled.
+- Confirm that `xplora_username` and `xplora_password` are filled.
+- If you use a phone number instead of an e-mail address, also set `xplora_country_code`.
 
 ### GPS data is missing
 
 - Switch `log_level` to `DEBUG`.
-- Verify the Xplora endpoint paths.
+- Keep `xplora_base_url` on the default GraphQL endpoint unless you have verified a different host.
+- Check whether the Xplora account returns linked children after login.
 - Inspect normalization rules in [`app/xplora_client.py`](app/xplora_client.py).
 
 ### Reverse geocoding is missing

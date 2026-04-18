@@ -31,16 +31,28 @@ configuration:
     description: Optionales Passwort der PostgreSQL-Datenbank.
   xplora_base_url:
     name: Xplora-Basis-URL
-    description: Basis-URL der Xplora-Cloud-API.
+    description: Vollständiger GraphQL-Endpunkt der Xplora-Cloud. Normalerweise einfach auf dem Standardwert lassen.
+  xplora_country_code:
+    name: Xplora-Ländervorwahl
+    description: Nur nötig, wenn du dich mit Telefonnummer statt E-Mail anmeldest, zum Beispiel 49 für Deutschland.
+  xplora_user_lang:
+    name: Xplora-Sprache
+    description: Sprachcode für den Login, zum Beispiel de-DE oder en-GB.
+  xplora_time_zone:
+    name: Xplora-Zeitzone
+    description: IANA-Zeitzone für den Login, zum Beispiel Europe/Berlin.
+  xplora_trigger_locate:
+    name: Frische Position anfordern
+    description: Fordert vor jedem Polling aktiv einen neuen Standort von der Uhr an.
   xplora_login_path:
-    name: Xplora-Login-Pfad
-    description: API-Pfad für die Anmeldung.
+    name: Xplora-Login-Pfad (Legacy)
+    description: Wird im aktuellen GraphQL-Modus nicht mehr verwendet und kann auf dem Standardwert bleiben.
   xplora_devices_path:
-    name: Xplora-Gerätepfad
-    description: API-Pfad für die Geräteliste.
+    name: Xplora-Gerätepfad (Legacy)
+    description: Wird im aktuellen GraphQL-Modus nicht mehr verwendet und kann auf dem Standardwert bleiben.
   xplora_location_path:
-    name: Xplora-Standortpfad
-    description: Optionaler Zusatz-Endpunkt für Positionsdaten. Unterstützt {device_id}.
+    name: Xplora-Standortpfad (Legacy)
+    description: Wird im aktuellen GraphQL-Modus nicht mehr verwendet.
   xplora_username:
     name: Xplora-Benutzername
     description: Benutzername oder E-Mail des Xplora-Kontos.
