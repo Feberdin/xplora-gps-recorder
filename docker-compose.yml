@@ -43,3 +43,10 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.200.11.0/24
+          gateway: 10.200.11.1
