@@ -60,6 +60,8 @@ mapping = {
     "xplora_location_path": "XPLORA_LOCATION_PATH",
     "xplora_username": "XPLORA_USERNAME",
     "xplora_password": "XPLORA_PASSWORD",
+    "xplora_open_api_key": "XPLORA_OPEN_API_KEY",
+    "xplora_open_api_secret": "XPLORA_OPEN_API_SECRET",
     "xplora_verify_ssl": "XPLORA_VERIFY_SSL",
     "reverse_geocode_enabled": "REVERSE_GEOCODE_ENABLED",
     "mqtt_enabled": "MQTT_ENABLED",
@@ -115,6 +117,8 @@ validate_environment() {
     "Leave the default SQLite path in place or provide a PostgreSQL host/credentials or full database URL."
   require_env "XPLORA_USERNAME" "Set the Xplora account username."
   require_env "XPLORA_PASSWORD" "Set the Xplora account password."
+  require_env "XPLORA_OPEN_API_KEY" "Set the Xplora Open API key used by GraphQL bootstrap."
+  require_env "XPLORA_OPEN_API_SECRET" "Set the Xplora Open API secret used by GraphQL bootstrap."
 
   mqtt_enabled="$(printenv MQTT_ENABLED 2>/dev/null || printf 'false')"
   if [ "$mqtt_enabled" = "true" ] && [ -z "$(printenv MQTT_HOST 2>/dev/null || true)" ]; then
@@ -139,6 +143,8 @@ Resolved startup configuration:
   XPLORA_TRIGGER_LOCATE=${XPLORA_TRIGGER_LOCATE:-true}
   XPLORA_USERNAME=$( [ -n "${XPLORA_USERNAME:-}" ] && printf '<set>' || printf '<missing>' )
   XPLORA_PASSWORD=$( [ -n "${XPLORA_PASSWORD:-}" ] && printf '<set>' || printf '<missing>' )
+  XPLORA_OPEN_API_KEY=$( [ -n "${XPLORA_OPEN_API_KEY:-}" ] && printf '<set>' || printf '<missing>' )
+  XPLORA_OPEN_API_SECRET=$( [ -n "${XPLORA_OPEN_API_SECRET:-}" ] && printf '<set>' || printf '<missing>' )
   MQTT_ENABLED=${MQTT_ENABLED:-false}
   MQTT_HOST=$( [ -n "${MQTT_HOST:-}" ] && printf '%s' "$MQTT_HOST" || printf '<unset>' )
 EOF
