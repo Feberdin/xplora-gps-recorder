@@ -87,6 +87,8 @@ You can either:
 - `xplora_user_lang`
 - `xplora_time_zone`
 - `xplora_trigger_locate`
+- `xplora_open_api_key`
+- `xplora_open_api_secret`
 - `mqtt_enabled`
 - `mqtt_host`
 - `mqtt_user`

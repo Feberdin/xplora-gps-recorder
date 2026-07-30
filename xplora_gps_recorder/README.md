@@ -30,6 +30,8 @@ This Home Assistant add-on polls Xplora smartwatches, stores GPS history in SQLi
 - `xplora_user_lang`
 - `xplora_time_zone`
 - `xplora_trigger_locate`
+- `xplora_open_api_key`
+- `xplora_open_api_secret`
 
 `xplora_base_url` already defaults to the current Xplora GraphQL endpoint:
 

@@ -37,10 +37,10 @@ options:
   xplora_trigger_locate: true
   xplora_login_path: "/auth/login"
   xplora_devices_path: "/v1/devices"
-  xplora_username:
-  xplora_password:
   xplora_open_api_key:
   xplora_open_api_secret:
+  xplora_username:
+  xplora_password:
   xplora_verify_ssl: true
   reverse_geocode_enabled: true
   mqtt_enabled: false
@@ -64,11 +64,11 @@ schema:
   xplora_trigger_locate: bool
   xplora_login_path: str
   xplora_devices_path: str
+  xplora_open_api_key: str
+  xplora_open_api_secret: str
   xplora_location_path: "str?"
   xplora_username: str
   xplora_password: str
-  xplora_open_api_key: str?
-  xplora_open_api_secret: str?
   xplora_verify_ssl: bool
   reverse_geocode_enabled: bool
   mqtt_enabled: bool

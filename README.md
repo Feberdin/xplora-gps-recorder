@@ -181,6 +181,8 @@ All secrets live in `.env`. Never commit production credentials.
 | Variable | Purpose |
 | --- | --- |
 | `XPLORA_BASE_URL` | Full Xplora GraphQL endpoint, default `https://api.myxplora.com/api` |
+| `XPLORA_OPEN_API_KEY` | Public Xplora API client key (no hard-coded value) |
+| `XPLORA_OPEN_API_SECRET` | Public Xplora API client secret (no hard-coded value) |
 | `XPLORA_COUNTRY_CODE` | Required only when `XPLORA_USERNAME` is a phone number instead of an e-mail address |
 | `XPLORA_USER_LANG` | Login language such as `de-DE` or `en-GB` |
 | `XPLORA_TIME_ZONE` | IANA time zone such as `Europe/Berlin` |

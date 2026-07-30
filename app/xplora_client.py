@@ -26,10 +26,10 @@ from app.config import Settings
 logger = logging.getLogger(__name__)
 
 # Why this section exists:
-# Xplora does not publish a stable public developer API, so we intentionally keep
-# the minimal GraphQL contract we need in one place. These values are based on
-# the community-maintained `pyxplora_api` project and let us poll locations
-# without depending on undocumented REST placeholder endpoints.
+# Xplora does not publish a stable public API contract, so we keep the minimal
+# GraphQL contract in one place. It is based on the community-maintained
+# `pyxplora_api` project, and sensitive credentials come from configuration to
+# keep them out of git history and runtime logs.
 DEFAULT_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.3"
