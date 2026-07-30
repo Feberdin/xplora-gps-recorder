@@ -50,3 +50,20 @@ def test_settings_require_country_code_for_phone_logins() -> None:
             XPLORA_USERNAME="15123456",
             XPLORA_PASSWORD="secret",
         )
+
+
+def test_settings_require_open_api_credentials(monkeypatch) -> None:
+    monkeypatch.setenv("XPLORA_OPEN_API_KEY", "")
+    with pytest.raises(ValueError, match="XPLORA_OPEN_API_KEY"):
+        Settings(
+            XPLORA_USERNAME="child@example.test",
+            XPLORA_PASSWORD="secret",
+        )
+
+    monkeypatch.setenv("XPLORA_OPEN_API_KEY", "replace-me-open-api-key")
+    monkeypatch.setenv("XPLORA_OPEN_API_SECRET", "")
+    with pytest.raises(ValueError, match="XPLORA_OPEN_API_SECRET"):
+        Settings(
+            XPLORA_USERNAME="child@example.test",
+            XPLORA_PASSWORD="secret",
+        )
