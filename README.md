@@ -135,7 +135,7 @@ xplora-gps-recorder/
    docker compose up --build -d
    ```
 
-4. Open the API docs at [http://localhost:8000/docs](http://localhost:8000/docs).
+4. Open the API docs at `http://localhost:18080/docs` (or the host port set in `APP_PORT_HOST`).
 
 ### Quickstart as a Home Assistant add-on
 
@@ -173,6 +173,7 @@ All secrets live in `.env`. Never commit production credentials.
 | `DATABASE_URL` | Optional full SQLAlchemy connection string for PostgreSQL or another supported database |
 | `SQLITE_PATH` | Default local database file path used when `DATABASE_URL` is empty |
 | `POLL_INTERVAL_SECONDS` | Scheduler interval, default `60` |
+| `APP_PORT_HOST` | Host port for API publish, default `18080`; mapped to container `8000` |
 | `LOG_LEVEL` | `DEBUG`, `INFO`, `WARNING`, or `ERROR` |
 | `LOG_JSON` | JSON logs for container environments |
 
