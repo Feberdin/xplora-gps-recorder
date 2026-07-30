@@ -16,7 +16,7 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "18080:8000"
+      - "18082:8000"
 
   postgres:
     image: postgres:16-alpine
