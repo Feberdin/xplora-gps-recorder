@@ -11,7 +11,7 @@ services:
     container_name: xplora-gps-recorder-app
     restart: unless-stopped
     env_file:
-      - .env
+      - ${ENV_FILE:-.env.example}
     depends_on:
       postgres:
         condition: service_healthy
