@@ -15,6 +15,8 @@ This Home Assistant add-on polls Xplora smartwatches, stores GPS history in SQLi
 - `sqlite_path` can stay at the default value
 - `xplora_username`
 - `xplora_password`
+- `xplora_open_api_key`
+- `xplora_open_api_secret`
 
 ## Optional advanced database configuration
 
@@ -28,6 +30,8 @@ This Home Assistant add-on polls Xplora smartwatches, stores GPS history in SQLi
 - `xplora_user_lang`
 - `xplora_time_zone`
 - `xplora_trigger_locate`
+- `xplora_open_api_key`
+- `xplora_open_api_secret`
 
 `xplora_base_url` already defaults to the current Xplora GraphQL endpoint:
 
