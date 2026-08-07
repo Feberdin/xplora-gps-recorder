@@ -181,6 +181,8 @@ All secrets live in `.env`. Never commit production credentials.
 | Variable | Purpose |
 | --- | --- |
 | `XPLORA_BASE_URL` | Full Xplora GraphQL endpoint, default `https://api.myxplora.com/api` |
+| `XPLORA_OPEN_API_KEY` | Required API client key; provide it only through `.env` or a secret manager |
+| `XPLORA_OPEN_API_SECRET` | Required API client secret; provide it only through `.env` or a secret manager |
 | `XPLORA_COUNTRY_CODE` | Required only when `XPLORA_USERNAME` is a phone number instead of an e-mail address |
 | `XPLORA_USER_LANG` | Login language such as `de-DE` or `en-GB` |
 | `XPLORA_TIME_ZONE` | IANA time zone such as `Europe/Berlin` |
@@ -190,6 +192,11 @@ All secrets live in `.env`. Never commit production credentials.
 | `XPLORA_LOGIN_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |
 | `XPLORA_DEVICES_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |
 | `XPLORA_LOCATION_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |
+
+Starting with version 1.3.1, the API client key and secret no longer have source-code
+defaults. Existing installations must add both values to their protected runtime
+configuration before restarting. Do not copy these values into Compose files, logs,
+issues, or commits.
 
 ### Reverse geocoding and cache
 

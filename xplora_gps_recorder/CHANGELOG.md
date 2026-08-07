@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1 - 2026-08-07
+
+- Removed Xplora API client credentials from source code
+- Added required `xplora_open_api_key` and `xplora_open_api_secret` app settings
+- Added masked configuration fields and startup validation for both values
+
 ## 1.3.0 - 2026-04-18
 
 - Replaced the placeholder REST-based Xplora client with a GraphQL client tailored to the current Xplora cloud flow

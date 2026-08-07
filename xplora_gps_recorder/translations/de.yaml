@@ -32,6 +32,12 @@ configuration:
   xplora_base_url:
     name: Xplora-Basis-URL
     description: Vollständiger GraphQL-Endpunkt der Xplora-Cloud. Normalerweise einfach auf dem Standardwert lassen.
+  xplora_open_api_key:
+    name: Xplora-API-Client-Schlüssel
+    description: Erforderlicher API-Client-Schlüssel. Nur in diesem maskierten Feld speichern und niemals committen.
+  xplora_open_api_secret:
+    name: Xplora-API-Client-Secret
+    description: Erforderliches API-Client-Secret. Nur in diesem maskierten Feld speichern und niemals committen.
   xplora_country_code:
     name: Xplora-Ländervorwahl
     description: Nur nötig, wenn du dich mit Telefonnummer statt E-Mail anmeldest, zum Beispiel 49 für Deutschland.

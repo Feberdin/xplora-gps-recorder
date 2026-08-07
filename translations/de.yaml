@@ -32,6 +32,12 @@ configuration:
   xplora_base_url:
     name: Xplora-Basis-URL
     description: Basis-URL der Xplora-Cloud-API.
+  xplora_open_api_key:
+    name: Xplora-API-Client-Schlüssel
+    description: Erforderlicher API-Client-Schlüssel. Nur in einem maskierten Feld oder Secret-Manager speichern.
+  xplora_open_api_secret:
+    name: Xplora-API-Client-Secret
+    description: Erforderliches API-Client-Secret. Nur in einem maskierten Feld oder Secret-Manager speichern.
   xplora_login_path:
     name: Xplora-Login-Pfad
     description: API-Pfad für die Anmeldung.

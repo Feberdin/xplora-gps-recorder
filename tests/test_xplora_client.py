@@ -118,7 +118,7 @@ def test_fetch_device_snapshots_uses_graphql_email_login(monkeypatch) -> None:
     login_call = client.session.calls[0]
     assert login_call["json"]["variables"]["emailAddress"] == "parent@example.test"
     assert login_call["json"]["variables"]["phoneNumber"] is None
-    assert login_call["headers"]["H-BackDoor-Authorization"].startswith("Open ")
+    assert login_call["headers"]["H-BackDoor-Authorization"] == "Open test-open-key:test-open-secret"
 
     locate_call = client.session.calls[1]
     assert locate_call["headers"]["H-BackDoor-Authorization"] == "Bearer bearer-token:bearer-secret"

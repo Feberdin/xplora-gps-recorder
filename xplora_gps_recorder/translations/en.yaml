@@ -32,6 +32,12 @@ configuration:
   xplora_base_url:
     name: Xplora base URL
     description: Full Xplora GraphQL endpoint. In normal setups you can keep the default value.
+  xplora_open_api_key:
+    name: Xplora API client key
+    description: Required API client key. Store it only in this masked field and never commit it.
+  xplora_open_api_secret:
+    name: Xplora API client secret
+    description: Required API client secret. Store it only in this masked field and never commit it.
   xplora_country_code:
     name: Xplora country code
     description: Required only when you sign in with a phone number instead of an e-mail address, for example 49 for Germany.

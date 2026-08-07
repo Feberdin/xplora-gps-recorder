@@ -3,8 +3,9 @@ Purpose: Central runtime configuration for API, polling, storage, and integratio
 Inputs: Environment variables from `.env`, Docker secrets, or process environment.
 Outputs: A cached `Settings` object used across the whole application.
 Invariants: Secrets are read from environment variables only and never hard-coded.
-Debugging: Call `get_settings().model_dump(exclude={"xplora_password", "mqtt_password"})`
-carefully during local debugging to confirm configuration without leaking secrets.
+Debugging: Call `get_settings().model_dump(exclude={"xplora_open_api_key",
+"xplora_open_api_secret", "xplora_password", "mqtt_password"})` carefully during
+local debugging to confirm configuration without leaking secrets.
 """
 
 from __future__ import annotations
@@ -46,6 +47,8 @@ class Settings(BaseSettings):
     redis_url: str | None = Field(default=None, alias="REDIS_URL")
 
     xplora_base_url: str = Field(default="https://api.myxplora.com/api", alias="XPLORA_BASE_URL")
+    xplora_open_api_key: SecretStr = Field(alias="XPLORA_OPEN_API_KEY")
+    xplora_open_api_secret: SecretStr = Field(alias="XPLORA_OPEN_API_SECRET")
     xplora_country_code: str | None = Field(default=None, alias="XPLORA_COUNTRY_CODE")
     xplora_user_lang: str | None = Field(default=None, alias="XPLORA_USER_LANG")
     xplora_time_zone: str | None = Field(default=None, alias="XPLORA_TIME_ZONE")

@@ -32,6 +32,12 @@ configuration:
   xplora_base_url:
     name: Xplora base URL
     description: Base URL for the Xplora cloud API.
+  xplora_open_api_key:
+    name: Xplora API client key
+    description: Required API client key. Store it only in a masked field or secret manager.
+  xplora_open_api_secret:
+    name: Xplora API client secret
+    description: Required API client secret. Store it only in a masked field or secret manager.
   xplora_login_path:
     name: Xplora login path
     description: API path used for authentication.

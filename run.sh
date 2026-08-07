@@ -51,6 +51,8 @@ mapping = {
     "poll_interval_seconds": "POLL_INTERVAL_SECONDS",
     "sqlite_path": "SQLITE_PATH",
     "xplora_base_url": "XPLORA_BASE_URL",
+    "xplora_open_api_key": "XPLORA_OPEN_API_KEY",
+    "xplora_open_api_secret": "XPLORA_OPEN_API_SECRET",
     "xplora_country_code": "XPLORA_COUNTRY_CODE",
     "xplora_user_lang": "XPLORA_USER_LANG",
     "xplora_time_zone": "XPLORA_TIME_ZONE",
@@ -113,6 +115,10 @@ require_env() {
 validate_environment() {
   require_env "DATABASE_URL" \
     "Leave the default SQLite path in place or provide a PostgreSQL host/credentials or full database URL."
+  require_env "XPLORA_OPEN_API_KEY" \
+    "Provide the Xplora API client key through the environment or the Home Assistant app configuration."
+  require_env "XPLORA_OPEN_API_SECRET" \
+    "Provide the Xplora API client secret through the environment or the Home Assistant app configuration."
   require_env "XPLORA_USERNAME" "Set the Xplora account username."
   require_env "XPLORA_PASSWORD" "Set the Xplora account password."
 
@@ -130,9 +136,11 @@ Resolved startup configuration:
   POLL_INTERVAL_SECONDS=${POLL_INTERVAL_SECONDS:-60}
   LOG_LEVEL=${LOG_LEVEL:-INFO}
   LOG_JSON=${LOG_JSON:-true}
-  DATABASE_URL=$( [ -n "${DATABASE_URL:-}" ] && printf '%s' "$DATABASE_URL" || printf '<missing>' )
+  DATABASE_URL=$( [ -n "${DATABASE_URL:-}" ] && printf '<set>' || printf '<missing>' )
   SQLITE_PATH=$( [ -n "${SQLITE_PATH:-}" ] && printf '%s' "$SQLITE_PATH" || printf '<unset>' )
   XPLORA_BASE_URL=$( [ -n "${XPLORA_BASE_URL:-}" ] && printf '%s' "$XPLORA_BASE_URL" || printf '<missing>' )
+  XPLORA_OPEN_API_KEY=$( [ -n "${XPLORA_OPEN_API_KEY:-}" ] && printf '<set>' || printf '<missing>' )
+  XPLORA_OPEN_API_SECRET=$( [ -n "${XPLORA_OPEN_API_SECRET:-}" ] && printf '<set>' || printf '<missing>' )
   XPLORA_COUNTRY_CODE=$( [ -n "${XPLORA_COUNTRY_CODE:-}" ] && printf '%s' "$XPLORA_COUNTRY_CODE" || printf '<unset>' )
   XPLORA_USER_LANG=$( [ -n "${XPLORA_USER_LANG:-}" ] && printf '%s' "$XPLORA_USER_LANG" || printf '<default>' )
   XPLORA_TIME_ZONE=$( [ -n "${XPLORA_TIME_ZONE:-}" ] && printf '%s' "$XPLORA_TIME_ZONE" || printf '<default>' )

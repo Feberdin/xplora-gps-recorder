@@ -16,7 +16,8 @@ Instead:
 
 ## Hardening guidance
 
-- Store secrets only in `.env` or your secret manager.
+- Store Xplora account and API client credentials only in `.env`, the masked Home
+  Assistant app fields, or your secret manager.
 - Limit API, PostgreSQL, and MQTT exposure to trusted networks.
-- Rotate Xplora credentials if access logs suggest misuse.
-
+- Rotate credentials if they were committed or access logs suggest misuse. Removing a
+  value from the current tree does not remove it from Git history.
