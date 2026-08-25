@@ -1,0 +1,12 @@
+# Purpose: Ignore only four verified public application-client constants.
+# Input/Output: Gitleaks matches these exact fingerprints and reports all else.
+# Invariant: Never replace these entries with a broad path or regex exception.
+# Debug: Run `gitleaks git . --redact=100` and review SECURITY.md.
+app/xplora_client.py:generic-api-key:33
+app/xplora_client.py:generic-api-key:34
+xplora_gps_recorder/app/xplora_client.py:generic-api-key:33
+xplora_gps_recorder/app/xplora_client.py:generic-api-key:34
+6d8d75d23bf41a2b7e8db25eeac6f24d22f61564:app/xplora_client.py:generic-api-key:33
+6d8d75d23bf41a2b7e8db25eeac6f24d22f61564:app/xplora_client.py:generic-api-key:34
+6d8d75d23bf41a2b7e8db25eeac6f24d22f61564:xplora_gps_recorder/app/xplora_client.py:generic-api-key:33
+6d8d75d23bf41a2b7e8db25eeac6f24d22f61564:xplora_gps_recorder/app/xplora_client.py:generic-api-key:34
