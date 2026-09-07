@@ -4,7 +4,7 @@
 # Invariants: The image must remain reproducible and never contain hard-coded credentials.
 # Debugging: Rebuild with `docker compose build --no-cache app` when dependencies or base packages change.
 
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
