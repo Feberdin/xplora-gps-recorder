@@ -72,6 +72,8 @@ You can either:
 - `xplora_base_url`
 - `xplora_username`
 - `xplora_password`
+- `xplora_open_api_key`
+- `xplora_open_api_secret`
 
 ### Optional
 
@@ -113,6 +115,7 @@ Useful endpoints:
 - Check the add-on logs in Supervisor.
 - Confirm that `sqlite_path` is writable or the PostgreSQL values are complete.
 - Confirm that `xplora_username` and `xplora_password` are filled.
+- Confirm that `xplora_open_api_key` and `xplora_open_api_secret` are filled.
 - If you use a phone number instead of an e-mail address, also set `xplora_country_code`.
 
 ### GPS data is missing

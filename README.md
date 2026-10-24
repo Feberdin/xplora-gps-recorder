@@ -135,7 +135,7 @@ xplora-gps-recorder/
    docker compose up --build -d
    ```
 
-4. Open the API docs at [http://localhost:8000/docs](http://localhost:8000/docs).
+4. Open the API docs at `http://localhost:18080/docs` (or the host port set in `APP_PORT_HOST`).
 
 ### Quickstart as a Home Assistant add-on
 
@@ -187,6 +187,8 @@ All secrets live in `.env`. Never commit production credentials.
 | `XPLORA_TRIGGER_LOCATE` | Ask the watch for a fresh location before reading the latest point |
 | `XPLORA_USERNAME` | Xplora account username or e-mail address |
 | `XPLORA_PASSWORD` | Xplora account password |
+| `XPLORA_OPEN_API_KEY` | Static Xplora API client key for unauthenticated GraphQL bootstrap calls |
+| `XPLORA_OPEN_API_SECRET` | Static Xplora API client secret for unauthenticated GraphQL bootstrap calls |
 | `XPLORA_LOGIN_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |
 | `XPLORA_DEVICES_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |
 | `XPLORA_LOCATION_PATH` | Legacy REST placeholder, ignored by the current GraphQL mode |

@@ -19,6 +19,8 @@ os.environ.setdefault("DATABASE_URL", "sqlite:///./tests/test_bootstrap.sqlite3"
 os.environ.setdefault("XPLORA_BASE_URL", "https://api.example.test")
 os.environ.setdefault("XPLORA_USERNAME", "child@example.test")
 os.environ.setdefault("XPLORA_PASSWORD", "secret")
+os.environ.setdefault("XPLORA_OPEN_API_KEY", "replace-me-open-api-key")
+os.environ.setdefault("XPLORA_OPEN_API_SECRET", "replace-me-open-api-secret")
 os.environ.setdefault("XPLORA_TIME_ZONE", "UTC")
 os.environ.setdefault("XPLORA_USER_LANG", "en-GB")
 
@@ -31,6 +33,8 @@ def make_settings(**overrides) -> Settings:
         "XPLORA_BASE_URL": "https://api.example.test",
         "XPLORA_USERNAME": "child@example.test",
         "XPLORA_PASSWORD": "secret",
+        "XPLORA_OPEN_API_KEY": "replace-me-open-api-key",
+        "XPLORA_OPEN_API_SECRET": "replace-me-open-api-secret",
         "XPLORA_TIME_ZONE": "UTC",
         "XPLORA_USER_LANG": "en-GB",
     }
