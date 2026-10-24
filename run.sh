@@ -57,6 +57,8 @@ mapping = {
     "xplora_trigger_locate": "XPLORA_TRIGGER_LOCATE",
     "xplora_login_path": "XPLORA_LOGIN_PATH",
     "xplora_devices_path": "XPLORA_DEVICES_PATH",
+    "xplora_open_api_key": "XPLORA_OPEN_API_KEY",
+    "xplora_open_api_secret": "XPLORA_OPEN_API_SECRET",
     "xplora_location_path": "XPLORA_LOCATION_PATH",
     "xplora_username": "XPLORA_USERNAME",
     "xplora_password": "XPLORA_PASSWORD",
@@ -133,6 +135,7 @@ Resolved startup configuration:
   DATABASE_URL=$( [ -n "${DATABASE_URL:-}" ] && printf '%s' "$DATABASE_URL" || printf '<missing>' )
   SQLITE_PATH=$( [ -n "${SQLITE_PATH:-}" ] && printf '%s' "$SQLITE_PATH" || printf '<unset>' )
   XPLORA_BASE_URL=$( [ -n "${XPLORA_BASE_URL:-}" ] && printf '%s' "$XPLORA_BASE_URL" || printf '<missing>' )
+  XPLORA_OPEN_API_KEY=$( [ -n "${XPLORA_OPEN_API_KEY:-}" ] && printf '<set>' || printf '<missing>' )
   XPLORA_COUNTRY_CODE=$( [ -n "${XPLORA_COUNTRY_CODE:-}" ] && printf '%s' "$XPLORA_COUNTRY_CODE" || printf '<unset>' )
   XPLORA_USER_LANG=$( [ -n "${XPLORA_USER_LANG:-}" ] && printf '%s' "$XPLORA_USER_LANG" || printf '<default>' )
   XPLORA_TIME_ZONE=$( [ -n "${XPLORA_TIME_ZONE:-}" ] && printf '%s' "$XPLORA_TIME_ZONE" || printf '<default>' )

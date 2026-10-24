@@ -17,6 +17,8 @@ from app.config import Settings
 # before any application module imports happen.
 os.environ.setdefault("DATABASE_URL", "sqlite:///./tests/test_bootstrap.sqlite3")
 os.environ.setdefault("XPLORA_BASE_URL", "https://api.example.test")
+os.environ.setdefault("XPLORA_OPEN_API_KEY", "test-open-key")
+os.environ.setdefault("XPLORA_OPEN_API_SECRET", "test-open-secret")
 os.environ.setdefault("XPLORA_USERNAME", "child@example.test")
 os.environ.setdefault("XPLORA_PASSWORD", "secret")
 os.environ.setdefault("XPLORA_TIME_ZONE", "UTC")
@@ -29,6 +31,8 @@ def make_settings(**overrides) -> Settings:
     values = {
         "DATABASE_URL": "sqlite:///./tests/test_settings.sqlite3",
         "XPLORA_BASE_URL": "https://api.example.test",
+        "XPLORA_OPEN_API_KEY": "test-open-key",
+        "XPLORA_OPEN_API_SECRET": "test-open-secret",
         "XPLORA_USERNAME": "child@example.test",
         "XPLORA_PASSWORD": "secret",
         "XPLORA_TIME_ZONE": "UTC",
