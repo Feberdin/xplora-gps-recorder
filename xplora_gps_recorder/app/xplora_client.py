@@ -26,12 +26,10 @@ from app.config import Settings
 logger = logging.getLogger(__name__)
 
 # Why this section exists:
-# Xplora does not publish a stable public developer API, so we intentionally keep
-# the minimal GraphQL contract we need in one place. These values are based on
-# the community-maintained `pyxplora_api` project and let us poll locations
-# without depending on undocumented REST placeholder endpoints.
-OPEN_API_KEY = "fc45d50304511edbf67a12b93c413b6a"
-OPEN_API_SECRET = "1e9b6fe0327711ed959359c157878dcb"
+# Xplora does not publish a stable public API contract, so we keep the minimal
+# GraphQL contract in one place. It is based on the community-maintained
+# `pyxplora_api` project, and sensitive credentials come from configuration to
+# keep them out of git history and runtime logs.
 DEFAULT_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.3"
@@ -329,7 +327,7 @@ class XploraClient:
 
         w360 = sign_in.get("w360") or {}
         access_token = w360.get("token") or sign_in.get("token")
-        secret = w360.get("secret") or OPEN_API_SECRET
+        secret = w360.get("secret") or self.settings.xplora_open_api_secret.get_secret_value()
         if not access_token or not secret:
             raise XploraAuthenticationError("Xplora login did not return the access token required for follow-up queries.")
 
@@ -439,7 +437,9 @@ class XploraClient:
                 raise XploraAuthenticationError("No authenticated Xplora session is available.")
             authorization = f"Bearer {auth_state.access_token}:{auth_state.secret}"
         else:
-            authorization = f"Open {OPEN_API_KEY}:{OPEN_API_SECRET}"
+            authorization = (
+                f"Open {self.settings.xplora_open_api_key}:{self.settings.xplora_open_api_secret.get_secret_value()}"
+            )
 
         return {
             "Content-Type": "application/json; charset=UTF-8",

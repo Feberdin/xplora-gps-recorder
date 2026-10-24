@@ -53,6 +53,8 @@ class Settings(BaseSettings):
     xplora_login_path: str = Field(default="/auth/login", alias="XPLORA_LOGIN_PATH")
     xplora_devices_path: str = Field(default="/v1/devices", alias="XPLORA_DEVICES_PATH")
     xplora_location_path: str | None = Field(default=None, alias="XPLORA_LOCATION_PATH")
+    xplora_open_api_key: str = Field(alias="XPLORA_OPEN_API_KEY")
+    xplora_open_api_secret: SecretStr = Field(alias="XPLORA_OPEN_API_SECRET")
     xplora_username: str = Field(alias="XPLORA_USERNAME")
     xplora_password: SecretStr = Field(alias="XPLORA_PASSWORD")
     xplora_verify_ssl: bool = Field(default=True, alias="XPLORA_VERIFY_SSL")
@@ -133,6 +135,11 @@ class Settings(BaseSettings):
             raise ValueError(
                 "XPLORA_COUNTRY_CODE is required when XPLORA_USERNAME is a phone number instead of an e-mail address."
             )
+
+        if not self.xplora_open_api_key.strip():
+            raise ValueError("XPLORA_OPEN_API_KEY is required for Xplora GraphQL authentication.")
+        if not self.xplora_open_api_secret.get_secret_value().strip():
+            raise ValueError("XPLORA_OPEN_API_SECRET is required for Xplora GraphQL authentication.")
 
         return self
 
